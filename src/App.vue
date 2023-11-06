@@ -125,7 +125,7 @@ const play = () => {
           <div class='content'>
             <div class='title'>添加想要显示的文字</div>
             <fc-typing-input v-model='text3d' class='fc-input' placeholder='输入文字' style='width: 100%;' white
-                             @keydown.enter='addText()' @keydown.esc='toggleSetting()'
+                             @keydown.enter='addText' @keydown.esc='toggleSetting'
                              @keydown.ctrl.enter='play'>
             </fc-typing-input>
             <transition name='fade'>
@@ -146,7 +146,7 @@ const play = () => {
         </div>
       </transition>
     </div>
-    <div id='sketch'></div>
+    <div id='sketch' @keydown.esc='toggleSetting'></div>
   </DndProvider>
 </template>
 

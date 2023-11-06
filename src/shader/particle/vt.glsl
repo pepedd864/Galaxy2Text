@@ -30,13 +30,13 @@ void main() {
         rnd = -rnd;
     }
     float angle = -time * 2.0 * 3.1415926 / 60.0 * rnd;
-    float x = cos(angle) * pos.x - sin(angle) * pos.z;
-    float z = sin(angle) * pos.x + cos(angle) * pos.z;
-    float y= sin(time * rnd * 0.02) * 10.0 + pos.y;
+    float x = cos(angle) * position.x - sin(angle) * position.z;
+    float z = sin(angle) * position.x + cos(angle) * position.z;
+    float y= sin(time * rnd * 2.0) * 0.2 + position.y;
 
     vec3 transformed = vec3(0.0, 0.0, 0.0);
     if (isParticle == 1.0) {
-        transformed = vec3(x, y, z);
+        transformed = dis * percent + vec3(x, y, z);
     } else {
         transformed = pos + vec3(sin(time + speed * 4.5), cos(time * speed * 4.5), cos(time * speed * 4.5)) * 0.01;
     }

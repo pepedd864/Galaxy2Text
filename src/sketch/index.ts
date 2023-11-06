@@ -18,7 +18,6 @@ export default class Sketch extends kokomi.Base {
   async create() {
     this.index = 0
     this.isRender = false
-    const gui = new dat.GUI()
     // new SkyBox(this)
 
     // @ts-ignore
@@ -38,10 +37,14 @@ export default class Sketch extends kokomi.Base {
     setTimeout(() => document.dispatchEvent(new CustomEvent('loaded')), 1000)
 
     new Controls(this)
+    // @ts-ignore
+    if (import.meta.env.MODE === 'development') {
+      const gui = new dat.GUI()
+      gui.add(this.particle.points.material.uniforms.progress, 'value', 0, 1, 0.01)
+      gui.close()
+      new kokomi.Stats(this)
+    }
 
-    gui.add(this.particle.points.material.uniforms.progress, 'value', 0, 1, 0.01)
-    gui.close()
-    new kokomi.Stats(this)
   }
 
   render() {
@@ -55,7 +58,7 @@ export default class Sketch extends kokomi.Base {
     if (useText3dStore().playState && this.index >= this.strs.length) {
       useText3dStore().endPlay()
       this.index = 0
-      this.particle.empty()
+      this.particle.clear()
       await gsap.to(this.camera.position, { x: 0, y: 0, z: 15, duration: 5 })
     }
     if (!useText3dStore().playState) return

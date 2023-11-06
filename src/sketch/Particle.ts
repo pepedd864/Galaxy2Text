@@ -134,7 +134,7 @@ export default class Particle extends kokomi.Component {
 
     // 动画
     setTimeout(() => {
-      this.empty()
+      this.clear()
     }, 4000)
   }
 
@@ -226,12 +226,12 @@ export default class Particle extends kokomi.Component {
     target = null
     this._updateAttribute(['position', 'toPosition', 'speed', 'isParticle'])
     this.points.material.uniforms.progress.value = 0
-    await gsap.to(this.points.material.uniforms.progress, { value: 1, duration: 1 })
+    await gsap.to(this.points.material.uniforms.progress, { value: 1, duration: 1.5 })
     Particle.animating = false
     console.log('done')
   }
 
-  async empty() {
+  async clear() {
     if (Particle.animating) {
       console.log('animating')
       return
@@ -243,17 +243,16 @@ export default class Particle extends kokomi.Component {
       this.toPosition[i3] = Math.random() * this.params.radius - this.params.radius / 2
       this.toPosition[i3 + 1] = Math.random() * this.params.radius - this.params.radius / 2
       this.toPosition[i3 + 2] = Math.random() * this.params.radius - this.params.radius / 2
-      this.isParticle[i] = 0.0
+      this.isParticle[i] = 1.0
       this.speed[i] = Math.random() * 0.2 + 1
     }
     this._updateAttribute(['position', 'toPosition', 'speed', 'isParticle'])
     this.points.material.uniforms.progress.value = 0
-    await gsap.to(this.points.material.uniforms.progress, { value: 1, duration: 1 })
+    await gsap.to(this.points.material.uniforms.progress, { value: 1, duration: 3 })
     this.points.material.uniforms.progress.value = 0
     for (let i = 0; i < this.params.count; i++) {
       const i3 = i * 3
       this._copyCoord(this.position, this.toPosition, i3)
-      this.isParticle[i] = 1.0
     }
     this._updateAttribute(['position', 'toPosition', 'speed', 'isParticle'])
     Particle.animating = false
