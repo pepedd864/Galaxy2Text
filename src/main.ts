@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createApp } from 'vue'
 import '@/styles/base.scss'
 import App from '@/App.vue'

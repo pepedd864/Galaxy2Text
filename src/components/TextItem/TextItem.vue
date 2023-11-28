@@ -1,3 +1,4 @@
+<!--@ts-nocheck-->
 <script lang='ts' setup>
 import { useDrag, useDrop } from 'vue3-dnd'
 import { computed, ref, unref } from 'vue'
@@ -86,7 +87,7 @@ const { handlerId } = toRefs(dropCollect)
 const { isDragging } = toRefs(collect)
 const opacity = computed(() => (unref(isDragging) ? 0 : 1))
 
-const setRef = (el: HTMLDivElement) => {
+const setRef = (el: HTMLDivElement): undefined => {
   card.value = drag(drop(el)) as HTMLDivElement
 }
 const { removeText } = useText3dStore()

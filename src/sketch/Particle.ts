@@ -1,6 +1,7 @@
 import * as kokomi from 'kokomi.js'
+import type { NormalBufferAttributes } from 'three'
 import * as THREE from 'three'
-import { BufferGeometry, Color, NormalBufferAttributes, ShaderMaterial } from 'three'
+import { BufferGeometry, Color, ShaderMaterial } from 'three'
 // @ts-ignore
 import vertexShader from '@/shader/particle/vt.glsl?raw'
 // @ts-ignore
@@ -28,7 +29,7 @@ export default class Particle extends kokomi.Component {
   material: ShaderMaterial
   scale: Float32Array
   speed: Float32Array
-  points: THREE.Points<
+  points!: THREE.Points<
     BufferGeometry<NormalBufferAttributes>,
     ShaderMaterial
   >

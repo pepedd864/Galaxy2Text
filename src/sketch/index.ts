@@ -8,11 +8,10 @@ import * as dat from 'lil-gui'
 import { getFile } from '@/utils/utils'
 
 export default class Sketch extends kokomi.Base {
-  // @ts-ignore
-  strs: string[]
-  particle: Particle
-  index: number
-  isRender: boolean
+  strs: string[] = []
+  particle!: Particle
+  index!: number
+  isRender!: boolean
 
   // @ts-ignore
   async create() {

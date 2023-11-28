@@ -1,37 +1,21 @@
 {
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "compilerOptions": {
-    "baseUrl": ".",
-    "outDir": "build",
-    "module": "esnext",
-    "target": "es6",
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "lib": ["es6", "dom"],
-    "sourceMap": true,
-    "allowJs": false,
-    "rootDir": "./",
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "importHelpers": true,
-    "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": false,
-    "noUnusedLocals": false,
-    "skipLibCheck": false,
-    "resolveJsonModule": true,
-    "paths": {
-      "@/*": ["src/*"],
-      "@c/*": ["src/common/*"]
-    }
-  },
-  "include": ["src"],
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue"
+  ],
   "exclude": [
-    "node_modules",
-    "build",
-    "public",
-    "dist"
-  ]
+    "src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
 }
