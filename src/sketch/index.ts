@@ -28,8 +28,10 @@ export default class Sketch extends kokomi.Base {
       radius: 30,
       randomness: 2,
       randomnessPower: 3,
-      insideColor: '#cdb4ad',
-      outsideColor: '#1b3984',
+      insideColor: '#ffc0cb',
+      // outsideColor: '#ffffff',
+      outsideColor: '#ff4ebb',
+      // outsideColor: ''
     })
 
 
