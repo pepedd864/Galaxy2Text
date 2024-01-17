@@ -1,4 +1,12 @@
+// @ts-nocheck
 import * as kokomi from 'kokomi.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer'
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass'
+import { BloomPass } from 'three/examples/jsm/postprocessing/BloomPass'
+import { FilmPass } from 'three/examples/jsm/postprocessing/FilmPass'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass'
+import { FocusShader } from 'three/examples/jsm/shaders/FocusShader'
+
 import type { NormalBufferAttributes } from 'three'
 import * as THREE from 'three'
 import { BufferGeometry, Color, ShaderMaterial } from 'three'
@@ -34,9 +42,22 @@ export default class Particle extends kokomi.Component {
     ShaderMaterial
   >
   isParticle: Float32Array
+  composer?: EffectComposer
 
   constructor(base: kokomi.Base, params: ParticleParams) {
     super(base)
+    // 在场景中添加雾的效果，参数分别代表‘雾的颜色’、‘开始雾化的视线距离’、刚好雾化至看不见的视线距离’
+    this.base.scene.fog = new THREE.FogExp2(328972, 5e-4)
+    // this.base.renderer = new THREE.WebGLRenderer({
+    //   // 透明色
+    //   alpha: true,
+    // })
+    this.base.renderer.autoClear = false// 自动清理，解决 bloomPass 效果器冲突
+    // 渲染背景颜色同雾化的颜色
+    this.base.renderer.setClearColor(this.base.scene.fog.color)
+    // 打开渲染器的阴影地图
+    this.base.renderer.shadowMap.enabled = true
+    this.base.renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
     const { count, insideColor, outsideColor } = params
     this.params = params
@@ -67,12 +88,33 @@ export default class Particle extends kokomi.Component {
     this.generate()
   }
 
+  /**
+   * 创建特效
+   */
+  createEffect() {
+    this.base.composer = new EffectComposer(this.base.renderer)
+    const renderPass = new RenderPass(this.base.scene, this.base.camera)
+    const bloomPass = new BloomPass(0.75)
+    const filmPass = new FilmPass(0.5, 0.5, 1500, 0)
+    const shaderPass = new ShaderPass(FocusShader)
+    shaderPass.uniforms.screenWidth.value = window.innerWidth
+    shaderPass.uniforms.screenHeight.value = window.innerHeight
+    shaderPass.uniforms.sampleDistance.value = 0.4
+    shaderPass.renderToScreen = true
+
+    this.base.composer?.addPass(renderPass)
+    this.base.composer?.addPass(bloomPass)
+    this.base.composer?.addPass(filmPass)
+    this.base.composer?.addPass(shaderPass)
+  }
+
   static animating: boolean = false
 
   update() {
     // this._resetVector()
     this.material.uniforms.time.value = this.base.clock.elapsedTime
   }
+
 
   generate() {
     if (this.points) {
@@ -133,9 +175,11 @@ export default class Particle extends kokomi.Component {
 
     this.base.scene.add(this.points)
 
+    this.createEffect()
+
     // 动画
     setTimeout(() => {
-      this.clear()
+      // this.clear()  // TODO
     }, 4000)
   }
 

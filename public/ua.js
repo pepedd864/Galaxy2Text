@@ -30,17 +30,17 @@ if (userAgent.indexOf('Firefox') > -1) {
 console.log('Browser Name: ' + browserName)
 console.log('Browser Version: ' + browserVersion)
 
-// 只允许 Chrome 浏览器访问
-if (!(browserName === 'Chrome' || browserName === 'Edge')) {
-  window.stop()
-  alert(`当前浏览器为 ${browserName}，建议使用 Chrome 浏览器访问`)
-  // 在低版本浏览器中停止加载，显示提示信息
-  document.dispatchEvent(new CustomEvent('loaded'))
-  window.location.href = 'about:blank'
-}
-if ((browserName === 'Chrome' || browserName === 'Edge') && parseInt(browserVersion) < 100) {
-  window.stop()
-  alert(`当前浏览器版本过低，建议使用 Chrome 100+ 版本访问`)
-  document.dispatchEvent(new CustomEvent('loaded'))
-  window.location.href = 'about:blank'
-}
+// // 只允许 Chrome 浏览器访问
+// if (!(browserName === 'Chrome' || browserName === 'Edge')) {
+//   window.stop()
+//   alert(`当前浏览器为 ${browserName}，建议使用 Chrome 浏览器访问`)
+//   // 在低版本浏览器中停止加载，显示提示信息
+//   document.dispatchEvent(new CustomEvent('loaded'))
+//   window.location.href = 'about:blank'
+// }
+// if ((browserName === 'Chrome' || browserName === 'Edge') && parseInt(browserVersion) < 100) {
+//   window.stop()
+//   alert(`当前浏览器版本过低，建议使用 Chrome 100+ 版本访问`)
+//   document.dispatchEvent(new CustomEvent('loaded'))
+//   window.location.href = 'about:blank'
+// }

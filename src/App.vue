@@ -247,6 +247,7 @@ const play = () => {
       position: absolute;
       bottom: 30px;
       right: 20px;
+      user-select: none;
     }
   }
 }

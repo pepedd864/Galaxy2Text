@@ -52,7 +52,7 @@ export default class Text3D extends BufferGeometry {
     const count = text.length
     // 2. 计算点数, 如果是中文字符则为5300, 其他为2700
     const [chinese, english] = getStrLength(text)
-    const points = chinese * 5300 + english * 2700
+    const points = chinese * 2700 + english * 1350
     // 3. 采样
     const sampledPos = kokomi.sampleParticlesPositionFromMesh(
       t3d.mesh.geometry,

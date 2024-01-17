@@ -23,7 +23,7 @@ export default class Sketch extends kokomi.Base {
     window.particleFont = await kokomi.loadFont(getFile('assets/fonts/PingFangSCRegular.json'))
 
     this.particle = new Particle(this, {
-      count: 70000,
+      count: 35000,
       size: 0.2,
       radius: 30,
       randomness: 2,
